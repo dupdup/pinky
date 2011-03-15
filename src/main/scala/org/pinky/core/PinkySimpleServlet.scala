@@ -15,9 +15,6 @@ import javax.imageio.ImageIO
 
 class PinkySimpleServlet extends HttpServlet {
 
-  type Html = String
-  type XHtml = xml.Elem
-
   private def makeCall(method: String, request: HttpServletRequest, response: HttpServletResponse) {
 
       if (handlers.contains(method) == false) throw new RuntimeException("could not find a handler with the request method:"+method+" in:"+handlers.toString)
