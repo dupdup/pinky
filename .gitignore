@@ -2,4 +2,7 @@ target/
 lib_managed/
 src_managed/
 project/boot/
+project/plugins/lib_managed/
+project/plugins/target/
+project/plugins/src_managed/
 logs/

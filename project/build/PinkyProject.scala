@@ -17,7 +17,7 @@ import sbt._
  *  val json = "org.json" % "json" % "20080701" % "compile"
  */
 //class PinkyProject(info: ProjectInfo) extends DefaultWebProject(info) {
-class PinkyProject(info: ProjectInfo) extends DefaultProject(info) {
+class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProject{
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
 
   override def ivyXML = <dependencies><exclude module="guice-all" /></dependencies>
