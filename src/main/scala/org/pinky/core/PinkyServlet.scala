@@ -19,7 +19,7 @@ object RequestMethods extends Enumeration {
  * To change this template use File | Settings | File Templates.
  */
 
-class PinkyServlet extends HttpServlet {
+class PinkyServlet extends HttpServlet with ServletUtils{
   @Inject() val dispatch: ServletDispatch = null
 
   import collection.JavaConversions._

@@ -13,10 +13,7 @@ import javax.imageio.ImageIO
  * To change this template use File | Settings | File Templates.
  */
 
-class PinkySimpleServlet extends HttpServlet {
-
-  type Html = String
-  type XHtml = xml.Elem
+class PinkySimpleServlet extends HttpServlet with ServletUtils {
 
   private def makeCall(method: String, request: HttpServletRequest, response: HttpServletResponse) {
 
