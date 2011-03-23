@@ -1,5 +1,7 @@
 pinky is a Scala REST/MVC glue web framework built on top of Guice and Guice Servlet. Pinky provides out-of-the-box support for dealing with forms, akka actors, domain objects, jdbc and rss/xml/json/html content types 
 
-"more information":http://wiki.github.com/pk11/pinky/
+"How to create a Hello World App with pinky":https://github.com/pk11/pinky/wiki/Simple-Hello-World-App
 
-"A Simple tutorial on how to create a Hello World App with pinky":https://github.com/pk11/pinky/wiki/Simple-Hello-World-App
+"Full Documentation":https://github.com/pk11/pinky/wiki/Documentation
+
+
