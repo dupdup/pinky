@@ -5,8 +5,7 @@ import servlets._
 import org.pinky.comet.CometServlet
 import org.eclipse.jetty.continuation.ContinuationFilter
 import com.google.inject.{Scopes, AbstractModule}
-import org.pinky.guice.{CakeServletModule, ScalaServletModule, ScalaModule, PinkyServletContextListener, RepresentationModule}
-import com.google.inject.servlet.ServletModule
+import org.pinky.guice.{Module, Single, ServletModule, PinkyServletContextListener, RepresentationModule}
 import org.pinky.actor.ActorClient
 
 /**
@@ -17,32 +16,30 @@ import org.pinky.actor.ActorClient
  */
 class ExampleListener extends PinkyServletContextListener
 {
-  modules = Array (
+  modules(
     new RepresentationModule(),
-    new ScalaModule{
-      override def configure {
+    new Module{
+      def configure {
         bind[ActorClient].to[PingPongClient] 
         bind[ContinuationFilter].in(Scopes.SINGLETON)
-      }
+      }   
+    },
+    new Single("/scalatra/*"){
+        val bindServlet = new MyScalatraApp
     },
     new ServletModule {
-      override def configureServlets {
-        serve("/comet*") by (classOf[ExampleCometServlet])
-      }
-    },
-    new ScalaServletModule {
-      override def configureServlets {
+      override def configureServlets{
         bindFilter[ExampleFilter].toUrl("/hello/*")
         bindFilter[ContinuationFilter].toUrl("/comet*") 
         bindServlet[ExampleRssServlet].toUrl("*.rss") 
-        //bindServlet[ExampleServlet].toUrl("/hello/*")
-      }
-    },
-    new CakeServletModule with CakeExampleContainer with ExampleServletCakeContainer {
-      val example = new Eater
-      override def configureServlets {
-        bindServlet(new ExampleServletCake).toUrl("/hello/*")
       }  
+    },
+    new ServletModule with CakeExampleContainer with ExampleServletCakeContainer {
+      val example = new Eater 
+      override def configureServlets{
+        val example = new Eater
+        bindServlet(new ExampleServletCake).toUrl("/hello/*")
+      }
     }
 
 

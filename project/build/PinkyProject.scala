@@ -17,7 +17,7 @@ import sbt._
  *  val json = "org.json" % "json" % "20080701" % "compile"
  */
 //class PinkyProject(info: ProjectInfo) extends DefaultWebProject(info) {
-class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProject{
+class PinkyProject(info: ProjectInfo) extends DefaultWebProject(info) with IdeaProject{
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
 
   override def ivyXML = <dependencies><exclude module="guice-all" /></dependencies>
@@ -54,6 +54,11 @@ class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProj
   val scalaGuice = "scala-guice" % "scala-guice" % "0.1" from "http://guice-maven.googlecode.com/svn/trunk/scala-guice/scala-guice_2.8.0-0.1.jar"
   val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
 
+  //scalatra
+  val scalatraVersion = "2.0.0.M3"
+  val scalatra = "org.scalatra" %% "scalatra" % scalatraVersion
+  val scalate = "org.scalatra" %% "scalatra-scalate" % scalatraVersion
+
   //pinky util
   val pinkyUtil = "org.pinky" % "pinky-util" % "1.0b" % "compile"
 
@@ -65,7 +70,7 @@ class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProj
   val xstream = "com.thoughtworks.xstream" % "xstream" % "1.3.1" % "compile"
   val json = "org.json" % "json" % "20080701" % "compile"
   val jettison = "org.codehaus.jettison" % "jettison" % "1.1" % "compile"
-  val scalate = "org.fusesource.scalate" % "scalate-core" % "1.3.2"
+  //val scalate = "org.fusesource.scalate" % "scalate-core" % "1.3.2"
 
   //testing
   val mockito = "org.mockito" % "mockito-core" % "1.7" % "test->default"

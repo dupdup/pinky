@@ -13,10 +13,9 @@ import com.google.inject.Guice
  */
 abstract class PinkyServletContextListener extends GuiceServletContextListener {
 
-  implicit def builderToRichBuilder(
-            builder: com.google.inject.servlet.ServletModule.ServletKeyBindingBuilder) = new DSLFixes.RichBuilder(builder);
+  private var  underlyingModules:Array[Module] = Array()
 
-  var modules: Array[Module] = _
+  def modules(modules: Module*) {underlyingModules = modules.toArray}
 
 
   /**
@@ -27,6 +26,6 @@ abstract class PinkyServletContextListener extends GuiceServletContextListener {
    *
    */
   override protected def getInjector(): Injector = {
-    Guice.createInjector(modules: _*)
+    Guice.createInjector(underlyingModules: _*)
   }
 }
