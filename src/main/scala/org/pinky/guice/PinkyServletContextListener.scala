@@ -2,7 +2,7 @@ package org.pinky.guice
 
 import com.google.inject.Injector
 import com.google.inject.servlet.GuiceServletContextListener
-import com.google.inject.Module
+import com.google.inject.{Module=>GModule}
 import com.google.inject.Guice
 
 /**
@@ -13,9 +13,9 @@ import com.google.inject.Guice
  */
 abstract class PinkyServletContextListener extends GuiceServletContextListener {
 
-  private var  underlyingModules:Array[Module] = Array()
+  private var  underlyingModules: Array[GModule] = Array()
 
-  def modules(modules: Module*) {underlyingModules = modules.toArray}
+  def modules(modules: GModule*) {underlyingModules = modules.toArray}
 
 
   /**

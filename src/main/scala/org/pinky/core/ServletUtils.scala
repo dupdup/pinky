@@ -53,14 +53,31 @@ trait ServletUtils {
       if (result == null) None else Some(result)
     }
 
+
+    def readBuffer: String = { 
+      val sb = new StringBuilder
+      val reader = request.getReader
+      var line = reader.readLine
+      while (line != null) {
+        sb.append(line + "\n")
+        line = reader.readLine
+      }   
+      sb.toString
+    } 
+  
     def parameter(name: String): Option[String] = {
       val result = request.getParameter(name)
       if (result == null) None else Some(result)
     }
-
-    def parameters(name: String): Option[Array[_]] = {
-      val result = request.getParameterValues(name)
-      if (result == null) None else Some(result)
+    
+    def parameters: collection.immutable.Map[String, Either[Option[String], List[String]]] = { 
+      import collection.JavaConverters._
+      request.getParameterMap.asInstanceOf[java.util.Map[String, Array[String]]].asScala.map(x =>
+      if (x._2 == null || x._2.size == 1)
+          if (x._2 == null || x._2(0) == "") Map(x._1 -> Left(None)) else Map(x._1 -> Left(Some(x._2(0))))
+        else
+          Map(x._1 -> Right(x._2.toList))
+      ).foldLeft(Map[String, Either[Option[String], List[String]]]())(_ ++ _)
     }
   }
 
