@@ -18,22 +18,6 @@ import org.pinky.guice.PinkyServletContextListener
 class PinkyServletContextListenerTest extends Spec with ShouldMatchers {
   describe("A Servlet Context Listener") {
 
-    it("should_fail_since_modules_are_not_populated") {
-      var exceptionIsThrown = false
-      try {
-        val f = new PinkyServletContextListener() {
-          def getInjectorPublic(): Injector = {
-            super.getInjector
-          }
-        }
-        val i = f.getInjectorPublic
-        i.hashCode()
-      } catch {
-          case ex: NullPointerException => exceptionIsThrown = true
-          case _ =>
-      }
-      exceptionIsThrown should be (true)
-    }
 
     it("should_fail_pass") {
       val f = new PinkyServletContextListener() {
@@ -41,7 +25,7 @@ class PinkyServletContextListenerTest extends Spec with ShouldMatchers {
           super.getInjector
         }
       }
-      f.modules = Array(new ServletModule() {})
+      f.modules (new ServletModule() {})
       val i = f.getInjectorPublic
       i.getClass.getName should equal("com.google.inject.internal.InjectorImpl")
     }
