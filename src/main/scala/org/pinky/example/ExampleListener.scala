@@ -5,7 +5,7 @@ import servlets._
 import org.pinky.comet.CometServlet
 import org.eclipse.jetty.continuation.ContinuationFilter
 import com.google.inject.{Scopes, AbstractModule}
-import org.pinky.guice.{Module, Single, ServletModule, PinkyServletContextListener, RepresentationModule}
+import org.pinky.guice.{Module, Single, Cake, ServletModule, PinkyServletContextListener, RepresentationModule}
 import org.pinky.actor.ActorClient
 
 /**
@@ -24,8 +24,8 @@ class ExampleListener extends PinkyServletContextListener
         bind[ContinuationFilter].in(Scopes.SINGLETON)
       }   
     },
-    new Single("/scalatra/*"){
-        val bindServlet = new MyScalatraApp
+    new Single("/scalatra/*") with Cake{
+      val bind = new MyScalatraApp
     },
     new ServletModule {
       override def configureServlets{
