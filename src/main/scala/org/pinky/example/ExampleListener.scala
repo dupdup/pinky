@@ -25,8 +25,12 @@ class ExampleListener extends PinkyServletContextListener
       }   
     },
     new Single("/scalatra/*") with Cake{
-      val bind = new MyScalatraApp
+      val bind = new MyScalatraApp with MyDependency
     },
+    //guice version - requires @Singleton annotation
+    //new Single("/scalatra/*") {
+    //   type = MyScalatraApp
+    //}
     new ServletModule {
       override def configureServlets{
         bindFilter[ExampleFilter].toUrl("/hello/*")
