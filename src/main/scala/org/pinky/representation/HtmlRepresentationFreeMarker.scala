@@ -1,27 +1,21 @@
 package org.pinky.representation
 
-import _root_.javax.servlet.ServletContext
 import com.google.inject.Inject
 import freemarker.template.{DefaultObjectWrapper, Configuration}
 import java.io.{File, BufferedWriter, OutputStreamWriter, OutputStream}
-import collection.JavaConversions._
- 
+import com.google.inject.name.Named
+
 /**
- * Provides FreeMarker rendering
- *
- * @param ctx the ServletContext is needed for the webapp path
- * @author peter hausel gmail com (Peter Hausel)
- */
-class HtmlRepresentationFreeMarker @Inject()(ctx: ServletContext) extends Representation {
+* Provides FreeMarker rendering
+*
+* @param ctx the ServletContext is needed for the webapp path
+* @author peter hausel gmail com (Peter Hausel)
+*/
+class HtmlRepresentationFreeMarker @Inject()(@Named("root") path: String) extends Representation {
   protected def spawnConfiguration = {
     val cfg = new Configuration
-
     cfg.setObjectWrapper(new DefaultObjectWrapper())
-    if (ctx != null)
-      cfg.setServletContextForTemplateLoading(ctx, "template")
-    else {
-      cfg.setDirectoryForTemplateLoading(new File(new File(".").getCanonicalPath() + "/src/main/webapp/template"))
-    }
+    cfg.setDirectoryForTemplateLoading( new File(path + File.separator.toString +  "template") )
     cfg
   }
 

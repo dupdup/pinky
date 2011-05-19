@@ -1,11 +1,10 @@
 package org.pinky.representation
 
-import _root_.javax.servlet.ServletContext
 import _root_.org.apache.velocity.app.VelocityEngine
 import _root_.org.apache.velocity.VelocityContext
 import com.google.inject.Inject
-import java.io.{BufferedWriter, OutputStreamWriter, OutputStream}
-import collection.JavaConversions._
+import java.io.{File,BufferedWriter, OutputStreamWriter, OutputStream}
+import com.google.inject.name.Named
 
 /**
  * Provides Velocity rendering, which is actually the default html rendering
@@ -13,10 +12,12 @@ import collection.JavaConversions._
  * @param ctx the ServletContext is needed for the webapp path
  * @author peter hausel gmail com (Peter Hausel)
  */
-class HtmlRepresentationVelocity @Inject()(ctx: ServletContext) extends Representation {
+class HtmlRepresentationVelocity @Inject()(@Named("root") path: String) extends Representation {
+  import collection.JavaConversions._
+
   val engine = new VelocityEngine()
   engine.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.JdkLogChute")
-  engine.setProperty("file.resource.loader.path", ctx.getRealPath("/") + "/template")
+  engine.setProperty("file.resource.loader.path",  path + File.separator +  "template" )
   // Initialize the engine
   engine.init()
 

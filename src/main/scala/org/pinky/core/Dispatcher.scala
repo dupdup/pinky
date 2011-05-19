@@ -1,14 +1,16 @@
 package org.pinky.core
 
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.google.inject._
 import java.io.{BufferedWriter, OutputStreamWriter, PrintWriter, StringWriter}
 import org.pinky.representation.Representations
+import com.google.inject._
 
 
 trait Dispatch {
+  val representation: Representations
   def call(request: HttpServletRequest, response: HttpServletResponse)(block: => Map[String, AnyRef])
 }
+
 trait ServletDispatch {
   def callSuppliedBlock(request: HttpServletRequest, response: HttpServletResponse, block: Function2[HttpServletRequest, HttpServletResponse, Map[String, AnyRef]])
 }
@@ -30,8 +32,9 @@ trait ServletDispatch {
  *
  * @author peter hausel gmail com (Peter Hausel)
  */
-@Singleton
-class Dispatcher @Inject()(representation: Representations) extends Dispatch  with ServletDispatch{
+
+
+trait ServletBasedDispatch extends Dispatch  with ServletDispatch{
 
     /**
    * @param request
@@ -94,7 +97,7 @@ class Dispatcher @Inject()(representation: Representations) extends Dispatch  wi
   /**
    * @param data user data
    * @param uri incoming request URI
-   * @param response response is needed for content type
+   * @param response is needed for content type
    */
   protected def route(data: Map[String, AnyRef], uri: String, ext: String, response: HttpServletResponse) {
     response.setContentType(representation.contentType(ext))
@@ -114,7 +117,7 @@ class Dispatcher @Inject()(representation: Representations) extends Dispatch  wi
           {error}
         </div>
       </body>
-    </html>;
+    </html>
     ret.toString
   }
 
@@ -125,12 +128,18 @@ class Dispatcher @Inject()(representation: Representations) extends Dispatch  wi
    */
   private def printEx(t: Throwable): String =
   {
-    val sw = new StringWriter();
-    val pw = new PrintWriter(sw, true);
-    t.printStackTrace(pw);
-    pw.flush();
-    sw.flush();
-    return sw.toString();
+    val sw = new StringWriter()
+    val pw = new PrintWriter(sw, true)
+    t.printStackTrace(pw)
+    pw.flush()
+    sw.flush()
+    return sw.toString()
   }
 
+}
+
+
+@Singleton
+class Dispatcher extends ServletBasedDispatch {
+    @Inject() val representation: Representations = null
 }

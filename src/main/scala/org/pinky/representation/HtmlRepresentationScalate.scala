@@ -1,10 +1,10 @@
 package org.pinky.representation
 
-import java.io.{OutputStream, OutputStreamWriter}
-import javax.servlet.ServletContext
+import java.io.{File, OutputStream, OutputStreamWriter}
 import com.google.inject.Inject
 import org.fusesource.scalate.TemplateEngine
 import org.fusesource.scalate.support.TemplateFinder
+import com.google.inject.name.Named
 
 /**
  * HTML representation which uses Scalate to do its heavy lifting.
@@ -12,8 +12,8 @@ import org.fusesource.scalate.support.TemplateFinder
  * @param ctx ServletContext instance
  * @author max@bumnetworks.com
  */
-class HtmlRepresentationScalate @Inject()(ctx: ServletContext) extends Representation {
-  val roots: List[String] = ctx.getRealPath("template") :: Nil
+class HtmlRepresentationScalate @Inject()(@Named("root") path: String) extends Representation {
+  val roots: List[String] = (path + File.separator +  "template") :: Nil
   val defaultExtension: Option[String] = None
 
   protected def engine0 =

@@ -17,7 +17,7 @@ import sbt._
  *  val json = "org.json" % "json" % "20080701" % "compile"
  */
 //class PinkyProject(info: ProjectInfo) extends DefaultWebProject(info) {
-class PinkyProject(info: ProjectInfo) extends DefaultWebProject(info) with IdeaProject{
+class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProject{
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
 
   override def ivyXML = <dependencies><exclude module="guice-all" /></dependencies>
@@ -29,12 +29,14 @@ class PinkyProject(info: ProjectInfo) extends DefaultWebProject(info) with IdeaP
   val scalatools = "scalatools" at "http://scala-tools.org/repo-snapshots"
   val guiceMaven = "guice maven repository" at "http://guice-maven.googlecode.com/svn/trunk"
   //akka repositories
+  /**
   val akk_core = "akka" at "http://akka.io/repository/"
   val akka_netty = "akka netty" at "https://repository.jboss.org/nexus/content/repositories/releases"
   val akka_databinder = "DataBinder" at "http://databinder.net/repo"
   val akka_configgy = "Configgy" at "http://www.lag.net/repo"
   val akka_multiverse = "Multiverse" at "http://multiverse.googlecode.com/svn/maven-repository/releases"
   val akka_jBoss = "jBoss" at "https://repository.jboss.org/nexus/content/groups/public/"
+   **/
   //comet
   val jetty_repo = "jetty repository" at "http://oss.sonatype.org/content/groups/jetty"
   
@@ -76,6 +78,7 @@ class PinkyProject(info: ProjectInfo) extends DefaultWebProject(info) with IdeaP
   val mockito = "org.mockito" % "mockito-core" % "1.7" % "test->default"
   val h2database = "com.h2database" % "h2" % "1.0.20070617" % "test->default"
   val scalatest = "org.scalatest" % "scalatest" % "1.2" % "test->default"
+  val scalateScalatest = "org.scalatra" %% "scalatra-scalatest" % scalatraVersion % "test->default"
 
   override def packageDocsJar = defaultJarPath("-javadoc.jar")
   override def packageSrcJar= defaultJarPath("-sources.jar")

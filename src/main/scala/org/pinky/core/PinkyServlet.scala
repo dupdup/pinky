@@ -1,68 +1,51 @@
 package org.pinky.core
 
 import javax.servlet.http.{HttpServlet, HttpServletRequest, HttpServletResponse}
-import com.google.inject._
 
 object RequestMethods extends Enumeration {
   type RequestMethods = Value
   val GET = Value("GET")
   val POST = Value("POST")
   val DELETE = Value("DELETE")
-  val PUT = Value("PUT") 
+  val PUT = Value("PUT")
 }
 
+
 /**
- * Created by IntelliJ IDEA.
- * User: phausel
- * Date: Jul 31, 2010
- * Time: 11:58:23 PM
- * To change this template use File | Settings | File Templates.
- */
+* Created by IntelliJ IDEA.
+* User: phausel
+* Date: 5/19/11
+* Time: 9:16 AM
+* To change this template use File | Settings | File Templates.
+*/
 
-class PinkyServlet extends HttpServlet with ServletUtils{
-  @Inject() val dispatch: ServletDispatch = null
+trait PinkyServlet extends HttpServlet with ServletUtils {
 
-  import collection.JavaConversions._
+  protected val dispatch: ServletDispatch
 
   def makeCall(method: String, request: HttpServletRequest, response: HttpServletResponse) {
-      try {
-      dispatch.callSuppliedBlock(request, response, handlers(method))
+    try {
+      dispatch.callSuppliedBlock(request, response, handlers(method).asInstanceOf[Function2[HttpServletRequest, HttpServletResponse, Map[String, AnyRef]]])
     } catch {
       case ex: NoSuchElementException => throw new RuntimeException("could not find a handler for this request method, you'll need to implement a call to " + request.getMethod)
       case ex: NullPointerException => throw new RuntimeException("guice cound not inject a ServletDispatch, was a class with this type registered?")
     }
   }
-  
+
   override def service(request: HttpServletRequest, response: HttpServletResponse) = {
-       makeCall(request.getMethod,request,response)
+    makeCall(request.getMethod, request, response)
   }
 
-  private val handlers = collection.mutable.Map[String, Function2[HttpServletRequest, HttpServletResponse, Map[String, AnyRef]]]()
+  private[core] val handlers = collection.mutable.Map[String, Function2[HttpServletRequest, HttpServletResponse, AnyRef]]()
 
   def convert(params: Map[String, Array[String]]): Map[String, AnyRef] = {
     val map = collection.mutable.Map[String, AnyRef]()
     for ((key, value) <- params) if (value.size == 1) map += ("key" -> value(0)) else map += ("key" -> value)
     return map.toMap
   }
-  //GET {
-  // (req:HttpServletRequest,res:HttpServletResponse) =>
-  //  val data = convert(req.getParameterMap)
-  //  data+Map("foo"->"foo")   
-  //}
 
-  def GET(block: (HttpServletRequest, HttpServletResponse) => Map[String, AnyRef]) {
-    handlers += (RequestMethods.GET.toString -> block)
-  }
 
-  def POST(block: (HttpServletRequest, HttpServletResponse) => Map[String, AnyRef]) {
-    handlers += (RequestMethods.POST.toString  -> block)
-  }
-
-  def PUT(block: (HttpServletRequest, HttpServletResponse) => Map[String, AnyRef]) {
-    handlers += (RequestMethods.PUT.toString -> block)
-  }
-
-  def DELETE(block: (HttpServletRequest, HttpServletResponse) => Map[String, AnyRef]) {
-    handlers += (RequestMethods.DELETE.toString -> block)
-  }
 }
+
+
+

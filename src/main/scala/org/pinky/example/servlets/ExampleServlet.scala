@@ -4,8 +4,8 @@ package org.pinky.example.servlets
 import com.google.inject._
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import akka.actor.{ActorRef, Actor}
-import org.pinky.core.PinkyServlet
 import org.pinky.actor.ActorClient
+import org.pinky.core.{AutoDispatch, PinkyServlet}
 
 class PingActor(pong: ActorRef) extends Actor {
   def receive = {
@@ -47,7 +47,7 @@ class PingPongClient extends ActorClient with Workers {
  * @author peter hausel gmail com (Peter Hausel)
  */
 @Singleton
-class ExampleServlet @Inject()(actorClient: ActorClient) extends PinkyServlet {
+class ExampleServlet @Inject()(actorClient: ActorClient) extends PinkyServlet with AutoDispatch {
   
   GET {
     (request: HttpServletRequest, response: HttpServletResponse) =>

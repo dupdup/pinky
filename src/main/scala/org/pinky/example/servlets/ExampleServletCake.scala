@@ -1,17 +1,14 @@
 package org.pinky.example.servlets
 
 
-import com.google.inject._
-import javax.servlet.http.{HttpServletResponse, HttpServletRequest, HttpServlet}
-import akka.actor.{ActorRef, Actor}
-import org.pinky.core.PinkyServlet
-
+import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
+import org.pinky.core.{SimpleDispatch, AutoDispatch, PinkyServlet}
 
 /**
- * A regular controller(serlvet) example
- *
- * @author peter hausel gmail com (Peter Hausel)
- */
+* A regular controller(serlvet) example
+*
+* @author peter hausel gmail com (Peter Hausel)
+*/
 
 trait CakeExampleComponent {
   val example: InnerCake
@@ -22,17 +19,17 @@ trait CakeExampleComponent {
 
 trait CakeExampleContainer extends CakeExampleComponent{
   class Eater extends InnerCake {
-    def saySomething = Map("name" -> "peter111" ) 
+    def saySomething = Map("name" -> "peter111" )
   }
 }
 
 trait ExampleServletCakeContainer {
   this: CakeExampleComponent =>
 
-  class ExampleServletCake extends PinkyServlet {
+  class ExampleServletCake extends PinkyServlet with SimpleDispatch {
     GET {
       (request: HttpServletRequest, response: HttpServletResponse) =>
-        example.saySomething
+        ("text/html"->example.saySomething)
     }
   }
 }
