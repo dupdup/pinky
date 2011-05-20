@@ -16,7 +16,8 @@ class RepresentationModule extends AbstractModule {
    * so this is pretty much the same as the java thing
    */
   protected def configure {
-    bind(classOf[Representation]) annotatedWith(named("html")) to classOf[HtmlRepresentationVelocity]
+    bindConstant.annotatedWith(named("scalatra.template.engine")).to("mustache")
+    bind(classOf[Representation]) annotatedWith(named("html")) to classOf[HtmlRepresentationScalate]
     bind(classOf[Representation]) annotatedWith(named("rss")) to classOf[RssRepresentation]
     bind(classOf[Representation]) annotatedWith(named("xml")) to classOf[XmlRepresentation]
     bind(classOf[Representation]) annotatedWith(named("json")) to classOf[JsonRepresentation]

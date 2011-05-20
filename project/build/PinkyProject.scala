@@ -60,6 +60,10 @@ class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProj
   val scalatraVersion = "2.0.0.M3"
   val scalatra = "org.scalatra" %% "scalatra" % scalatraVersion
   val scalate = "org.scalatra" %% "scalatra-scalate" % scalatraVersion
+  //enable it for scalate webapps in order to include scala-compiler.jar
+  //override def webappClasspath =
+  //  super.webappClasspath +++
+  //  buildCompilerJar
 
   //pinky util
   val pinkyUtil = "org.pinky" % "pinky-util" % "1.0b" % "compile"
@@ -72,7 +76,7 @@ class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProj
   val xstream = "com.thoughtworks.xstream" % "xstream" % "1.3.1" % "compile"
   val json = "org.json" % "json" % "20080701" % "compile"
   val jettison = "org.codehaus.jettison" % "jettison" % "1.1" % "compile"
-  //val scalate = "org.fusesource.scalate" % "scalate-core" % "1.3.2"
+  //val scalate = "org.fusesource.scalate" % "scalate-core" % "1.4.1"
 
   //testing
   val mockito = "org.mockito" % "mockito-core" % "1.7" % "test->default"

@@ -33,6 +33,7 @@ class ExampleListener extends PinkyServletContextListener {
     new ServletModule {
       override def configureServlets {
         bindFilter[ExampleFilter].toUrl("/hello/*")
+        bindServlet[ExampleServlet].toUrl("/hello/*")
         bindFilter[ContinuationFilter].toUrl("/comet*")
         bindServlet[ExampleRssServlet].toUrl("*.rss")
       }

@@ -4,14 +4,7 @@ import com.google.inject.Injector
 import com.google.inject.servlet.GuiceServletContextListener
 import com.google.inject.{Module=>GModule}
 import com.google.inject.Guice
-import javax.servlet.ServletContext
-import org.pinky.representation.Representation
-import org.pinky.actor.ActorClient
-import org.pinky.example.servlets.PingPongClient
-import com.google.inject.name.Named
 import com.google.inject.name.Names._
-import com.google.inject.binder.LinkedBindingBuilder._
-
 /**
  * adds varargs support to guice injector creator,
  * also hides guice form the listener
@@ -40,7 +33,7 @@ abstract class PinkyServletContextListener extends GuiceServletContextListener {
   override protected def getInjector(): Injector = {
     val pathModule = List(new  Module {
       def configure {
-        bindConstant.annotatedWith(named("root")).to(path)
+        bindConstant.annotatedWith(named("template.root")).to(path)
       }
     })
     Guice.createInjector( (pathModule ++ modules): _* )

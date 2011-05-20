@@ -12,7 +12,7 @@ import com.google.inject.name.Named
  * @param ctx the ServletContext is needed for the webapp path
  * @author peter hausel gmail com (Peter Hausel)
  */
-class HtmlRepresentationVelocity @Inject()(@Named("root") path: String) extends Representation {
+class HtmlRepresentationVelocity @Inject()(@Named("template.root") path: String) extends Representation {
   import collection.JavaConversions._
 
   val engine = new VelocityEngine()
