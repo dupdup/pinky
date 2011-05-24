@@ -29,14 +29,12 @@ class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProj
   val scalatools = "scalatools" at "http://scala-tools.org/repo-snapshots"
   val guiceMaven = "guice maven repository" at "http://guice-maven.googlecode.com/svn/trunk"
   //akka repositories
-  /**
   val akk_core = "akka" at "http://akka.io/repository/"
   val akka_netty = "akka netty" at "https://repository.jboss.org/nexus/content/repositories/releases"
   val akka_databinder = "DataBinder" at "http://databinder.net/repo"
   val akka_configgy = "Configgy" at "http://www.lag.net/repo"
   val akka_multiverse = "Multiverse" at "http://multiverse.googlecode.com/svn/maven-repository/releases"
   val akka_jBoss = "jBoss" at "https://repository.jboss.org/nexus/content/groups/public/"
-   **/
   //comet
   val jetty_repo = "jetty repository" at "http://oss.sonatype.org/content/groups/jetty"
   
@@ -49,7 +47,7 @@ class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProj
   //comet
   val jettyComet = "org.eclipse.jetty" % "jetty-continuation" % "7.0.2-SNAPSHOT" % "compile"
   //akka
-  val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.0-RC3" % "compile"
+  val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.0" % "compile"
 
   //guice
   val guiceServlet = "com.google.code.guice" % "guice-servlet" % "3.0-r1291" % "compile"
