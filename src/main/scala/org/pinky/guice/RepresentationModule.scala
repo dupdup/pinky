@@ -1,15 +1,15 @@
 package org.pinky.guice
 
-import com.google.inject.AbstractModule
 import com.google.inject.name.Names._
 import org.pinky.representation._
-import org.pinky.core.{ServletDispatch, Dispatcher, Dispatch}
+import org.pinky.core.{PinkyServlet, ServletDispatch, Dispatcher, Dispatch}
+import com.google.inject.{Inject, AbstractModule}
 
 /**
- * Provides basic representations, the easiest way to extend this if you provide your own module
- *
- * @author peter hausel gmail com (Peter Hausel)
- */
+* Provides basic representations, the easiest way to extend this if you provide your own module
+*
+* @author peter hausel gmail com (Peter Hausel)
+*/
 class RepresentationModule extends AbstractModule {
   /**
    * Guice's way to provide components for dependency injection. I could not really scalafy this one,
@@ -26,3 +26,4 @@ class RepresentationModule extends AbstractModule {
     bind(classOf[ServletDispatch]) to classOf[Dispatcher]
   }
 }
+
