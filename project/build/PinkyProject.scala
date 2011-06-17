@@ -79,8 +79,9 @@ class PinkyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProj
   //testing
   val mockito = "org.mockito" % "mockito-core" % "1.7" % "test->default"
   val h2database = "com.h2database" % "h2" % "1.0.20070617" % "test->default"
-  val scalatest = "org.scalatest" % "scalatest" % "1.2" % "test->default"
+  val scalatest = "org.scalatest" % "scalatest" % "1.3" % "test->default"
   val scalateScalatest = "org.scalatra" %% "scalatra-scalatest" % scalatraVersion % "test->default"
+
 
   override def packageDocsJar = defaultJarPath("-javadoc.jar")
   override def packageSrcJar= defaultJarPath("-sources.jar")
